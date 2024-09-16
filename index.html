@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restricted Textarea</title>
+
+    <style>
+        *{
+            color-scheme: dark;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        label{
+            width: 100%;
+            position: absolute;
+
+            & > span{
+                position: inherit;
+                right: 50%;
+                top: 9dvh;
+            }
+
+            & > textarea{
+                resize: none;
+                position: inherit;
+                border-radius: 10px;
+                padding: 10px;
+            }
+        }
+
+        textarea{
+            width: 50%;
+            height: 10dvh;
+        }
+
+        .overFlow{
+            border: 1px solid red;
+            span, &{
+                color: red;
+            }
+        }
+
+        textarea:focus {
+            outline: none;
+  
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Restricted Textarea</h1>
+    <label for="">
+        <textarea placeholder="Star typing..." id="textarea" maxlength="15" class=""></textarea>
+        <span id="contador">15/250</span>
+    </label>
+</body>
+
+<script type="module">
+
+    const $ = (el) => document.getElementById(el)
+    
+    const $textarea = $('textarea')
+    const $contador = $('contador')
+
+    const maxlength = $textarea.getAttribute('maxlength')
+
+    $contador.innerText = `${$textarea.value.length}/${maxlength}`
+    
+    $textarea.addEventListener('input', (e) => {
+        let value = e.target.value
+        $contador.innerText = `${$textarea.value.length}/${maxlength}`
+
+        if(value.length >= maxlength){
+            $textarea.className = 'overFlow'
+        }
+        else $textarea.className = ''
+    })
+
+</script>
+</html>
